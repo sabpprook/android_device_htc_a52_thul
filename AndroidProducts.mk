@@ -1,3 +1,3 @@
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/device.mk \
-    $(LOCAL_DIR)/omni_a52_tuhl.mk
+    $(LOCAL_DIR)/full_a52tuhl.mk \
+    $(LOCAL_DIR)/omni_a52tuhl.mk

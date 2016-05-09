@@ -1,9 +1,9 @@
 # Bootloader
 TARGET_NO_BOOTLOADER := true
-TARGET_BOOTLOADER_BOARD_NAME := msm8939
+TARGET_BOOTLOADER_BOARD_NAME := qcom
 
 # Platform
-TARGET_BOARD_PLATFORM := msm8939
+TARGET_BOARD_PLATFORM := msm8916
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno405
 
 # Architecture
@@ -20,42 +20,42 @@ TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := generic
 
-# Flags
-TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
-TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
-
-# Init
-TARGET_PLATFORM_DEVICE_BASE := /devices/soc.0/
-
 # Kernel
-TARGET_PREBUILT_KERNEL := device/htc/a52_tuhl/kernel
-BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom user_debug=31 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci
+BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom user_debug=31 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 androidboot.selinux=permissive
 BOARD_KERNEL_BASE := 0x80078000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
-BOARD_MKBOOTIMG_ARGS := --dt device/htc/a52_tuhl/dt.img --kernel_offset 0x00008000 --ramdisk_offset 0x01f88000 --tags_offset 0x01d88000
+BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01f88000 --tags_offset 0x01d88000 --dt device/htc/a52tuhl/recovery/dt.img
 
-# USB Mounting
-TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun0/file
+# Partitions
+BOARD_BOOTIMAGE_PARTITION_SIZE := 0x02000000
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x02000000
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 0x118000000
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 0x260000000
+BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
+TARGET_USERIMAGES_USE_EXT4 := true
 
 # Recovery
-TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_HAS_LARGE_FILESYSTEM := true
-
-# TWRP-Specific
-TARGET_RECOVERY_FSTAB := device/htc/a52_tuhl/recovery/root/etc/twrp.fstab
-TW_THEME := portrait_hdpi
+BOARD_HAS_NO_MISC_PARTITION := true
+BOARD_HAS_NO_SELECT_BUTTON := true
+BOARD_RECOVERY_SWIPE := true
+BOARD_SUPPRESS_SECURE_ERASE := true
+BOARD_USES_MMCUTILS := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBA_8888"
-RECOVERY_SDCARD_ON_DATA := true
+TARGET_PREBUILT_KERNEL := device/htc/a52tuhl/recovery/kernel
+TARGET_RECOVERY_DEVICE_MODULES := chargeled
+
+# TWRP Build Flags
+TW_THEME := portrait_hdpi
 TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_INCLUDE_CRYPTO := true
-TARGET_RECOVERY_QCOM_RTC_FIX := true
-TW_TARGET_USES_QCOM_BSP := false
-TW_INTERNAL_STORAGE_PATH := "/data/media"
-TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
-TW_EXTERNAL_STORAGE_PATH := "/external_sd"
-TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
-TW_DEFAULT_EXTERNAL_STORAGE := true
-TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
-RECOVERY_GRAPHICS_USE_LINELENGTH := true
-BOARD_SUPPRESS_SECURE_ERASE := true
+TW_NO_EXFAT_FUSE := true
+TW_NO_SCREEN_BLANK := true
+TW_EXCLUDE_SUPERSU := true
+
+# Vendor Init
+TARGET_PLATFORM_DEVICE_BASE := /devices/soc.0/
+TARGET_UNIFIED_DEVICE := true
+TARGET_INIT_VENDOR_LIB := libinit_msm
+TARGET_LIBINIT_DEFINES_FILE := device/htc/a52tuhl/init/init_a52tuhl.cpp

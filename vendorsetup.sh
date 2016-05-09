@@ -1,2 +1,2 @@
-
-add_lunch_combo omni_a52_tuhl-eng
+add_lunch_combo omni_a52tuhl-userdebug
+add_lunch_combo omni_a52tuhl-eng
